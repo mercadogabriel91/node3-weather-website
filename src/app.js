@@ -3,11 +3,11 @@ const express = require('express');
 const hbs = require('hbs')
 
 const app = express();
+const port = process.env.PORT || 3000;
+
 
 //Import weatherStack call
 const forecast = require('../utils/forecast');
-const { response } = require('express');
-
 
 //Define paths for express config
 const publicDirectoryPath = path.join(__dirname, '../public')
@@ -18,7 +18,6 @@ const partialsPath = path.join(__dirname, '../templates/partials')
 
 //Setup handlebars engine and views location
 app.set('view engine', '.hbs');
-// app.set('views', '../views')
 app.set('views', viewsPath)
 hbs.registerPartials(partialsPath)
 
@@ -32,22 +31,22 @@ app.use(express.static(publicDirectoryPath))
 app.get('', (req, res) => {
     res.render('index', {
         title: 'Weather App',
-        name: 'Mazzuccio'
+        name: 'Gabriel'
     })
 })
 
 app.get('/about', (req, res) => {
     res.render('about', {
         title: 'About me',
-        name: 'Mazzuccio'
+        name: 'Gabriel'
     })
 })
 
 app.get('/help', (req, res) => {
     res.render('help', {
-        help: `ohhhhh pero q lassssss`,
+        help: `There's no help really, sorry.`,
         title: 'Halpp',
-        name: 'Mazzuccio'
+        name: 'Gabriel'
     })
 })
 
@@ -59,11 +58,11 @@ app.get('/weather', (req, res) => {
         return res.send({
             error: 'You must enter an address.'
         })
-    } 
-    forecast(address, (error, data) =>{
+    }
+    forecast(address, (error, data) => {
         if (error) {
             return res.send({ error })
-        } 
+        }
 
         res.send({
             forecast: data
@@ -86,7 +85,7 @@ app.get('/products', (req, res) => {
 app.get('/help/*', (req, res) => {
     res.render('404', {
         title: '404',
-        name: 'Mazzuccio',
+        name: 'Gabriel',
         errorMessage: 'Help article not found'
     })
 })
@@ -94,11 +93,11 @@ app.get('/help/*', (req, res) => {
 app.get('*', (req, res) => {
     res.render('404', {
         title: '404',
-        name: 'Mazzuccio',
+        name: 'Gabriel',
         errorMessage: 'Page not found'
     })
 })
 
-app.listen(3000, () => {
-    console.log('Server up and running on port :3000')
+app.listen(port, () => {
+    console.log('Server up and running on port: ' + port)
 })
