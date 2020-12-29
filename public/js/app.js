@@ -10,18 +10,21 @@ weatherForm.addEventListener('submit', (e) => {
 
     messageTwo.textContent = 'Loading...'
     messageOne.textContent = ''
-   
+
 
     fetch(`/weather?address=${location}`).then((response) => {
         response.json().then((data) => {
 
             JSON.stringify(data)
-            let { forecast } = {...data}
+            let { forecast } = { ...data }
 
             if (data.error) {
                 messageOne.textContent = data.error
             } else {
-                messageTwo.textContent = `The weather for ${forecast.location.name}, ${forecast.location.country} is currently: ${forecast.current.temperature}°C`
+                messageTwo.textContent = `City: ${forecast.location.name}, 
+                Country: ${forecast.location.country}.
+                The temperature is currently: ${forecast.current.temperature}°C.
+                It is ${forecast.current.weather_descriptions[0]} with a Wind speed of ${forecast.current.wind_speed} Km/h and a humidity of ${forecast.current.humidity}%`
             }
 
         })
